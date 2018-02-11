@@ -5,7 +5,6 @@ templates:
   ansible/inventory.erb: ansible/inventory
   ansible/start.yml: ansible/start.yml
   ansible/pre-start.yml: ansible/50-pre-start.yml
-  ansible/nginx.conf.erb: ansible/nginx.conf
   ansible/gitlab.rb.erb: ansible/gitlab.rb
 
 packages: []
