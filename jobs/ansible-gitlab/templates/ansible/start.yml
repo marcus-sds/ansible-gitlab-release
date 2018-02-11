@@ -1,0 +1,15 @@
+---
+- name: Update all packages list to the latest version
+  shell: apt-get update
+
+- name: Install Pre-requirements
+  shell: apt-get install -y ca-certificates curl openssh-server postfix wget
+
+- name: repositories
+  shell: wget -O /tmp/script.deb.sh https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
+
+- name: Run script.deb.sh
+  shell: bash /tmp/script.deb.sh
+
+- name: Install gitlab-ce
+  shell: apt-get install -y gitlab-ce
