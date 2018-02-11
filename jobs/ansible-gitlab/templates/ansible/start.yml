@@ -15,7 +15,7 @@
   shell: |
     mkdir -p /var/vcap/store/opt/gitlab
     mkdir -p /var/vcap/store/var/opt/gitlab
-    mkdir -p <%= p('gitlab.backup_path') %>
+    mkdir -p <%= p("gitlab.backup_path") %>
 
 - name: Link gitlab directory
   shell: |
@@ -23,7 +23,7 @@
     ln -s /var/vcap/store/var/opt/gitlab /var/opt/gitlab
 
 - name: Install gitlab-ce
-  shell: apt-get install -y gitlab-ce=<%= p('gitlab.version') %>
+  shell: apt-get install -y gitlab-ce=<%= p("gitlab.version") %>
 
 - name: Link gitlab.rb
   shell: |

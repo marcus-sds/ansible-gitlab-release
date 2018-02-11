@@ -1,6 +1,8 @@
 builds:
   23bb4b55-e0f8-4e92-6787-e788b2ab4e88:
     version: 0+dev.5
+  52716146-2edb-459f-562c-7e207a1e6265:
+    version: 0+dev.6
   6a1c373b-3af3-4338-5d16-eaadbf489dee:
     version: 0+dev.4
   99555e7e-e367-4359-7a39-3154522a4343:
