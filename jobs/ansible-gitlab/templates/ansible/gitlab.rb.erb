@@ -1,6 +1,6 @@
 <%
-  server = nil
-  if_p("gitlab.external_url") do |prop|>
+  server = "http://" + spec.address
+  if_p("gitlab.external_url") do |prop|
     server = prop
   end
 %>

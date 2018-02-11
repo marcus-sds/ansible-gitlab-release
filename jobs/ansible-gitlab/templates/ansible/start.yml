@@ -15,7 +15,7 @@
   shell: |
     mkdir -p /var/vcap/store/opt/gitlab
     mkdir -p /var/vcap/store/var/opt/gitlab
-    mkdir -p <%= p('gitlab.backup_keep_path') %>
+    mkdir -p <%= p('gitlab.backup_path') %>
 
 - name: Link gitlab directory
   shell: |
