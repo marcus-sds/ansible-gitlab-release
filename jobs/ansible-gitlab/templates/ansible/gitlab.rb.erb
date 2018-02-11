@@ -1,4 +1,10 @@
-external_url 'http://git.poc.mycloud.ebizmaster.net'
-gitlab_rails['backup_path'] = "/backups"
+<%
+  server = nil
+  if_p("gitlab.external_url") do |prop|>
+    server = prop
+  end
+%>
+external_url '<%= server %>'
+gitlab_rails['backup_path'] = "<%= p("gitlab.backup_path") %>"
 gitlab_rails['backup_archive_permissions'] = 0600
-gitlab_rails['backup_keep_time'] = 604800
+gitlab_rails['backup_keep_time'] = "<%= p("gitlab.backup_keep_time") %>"

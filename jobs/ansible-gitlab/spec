@@ -10,4 +10,9 @@ templates:
 
 packages: []
 
-properties: {}
+properties:
+  gitlab:
+    version: "10.4.3-ce.0"
+    external_url: http://example.com
+    backup_path: "/var/vcap/store/backup"
+    backup_keep_time: "86400"
