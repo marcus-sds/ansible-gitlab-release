@@ -6,7 +6,7 @@
   shell: apt-get install -y ca-certificates curl openssh-server postfix wget
 
 - name: repositories
-  shell: wget -O /tmp/script.deb.sh https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
+  shell: wget -O /tmp/script.deb.sh https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh --no-check-certificate
 
 - name: Run script.deb.sh
   shell: bash /tmp/script.deb.sh
