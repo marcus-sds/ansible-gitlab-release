@@ -1,0 +1,49 @@
+---
+name: ansible-gitlab
+
+releases:
+- name: ansible-gitlab
+  version: latest
+- name: ansible
+  version: latest
+
+update:
+  canaries: 1
+  max_in_flight: 1
+  serial: false
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
+
+stemcells:
+- alias: ubuntu
+  os: ubuntu-trusty
+  version: latest
+
+instance_groups:
+- name: ansible-gitlab
+  instances: 1
+  vm_type: small
+  persistent_disk_type: 10GB
+  stemcell: ubuntu
+  azs:
+  - z1
+  - z2
+  networks:
+  - name: vpn
+    default: [dns, gateway]
+  - name: vip
+    static_ips: [((gitlab-eip))]
+  jobs:
+  - name: ansible-hooks
+    release: ansible
+  - name: ansible-gitlab
+    release: ansible-gitlab
+    properties:
+      gitlab:
+        version: "10.4.3-ce.0"
+        external_url: "http://((gitlab-eip))"
+        backup_path: "/var/vcap/store/backup"
+        backup_keep_time: "86400"
+        log_rail: "/var/log/gitlab/gitlab-rails"
+        log_unicorn: "/var/log/gitlab/unicorn"
+        log_registry: "/var/log/gitlab/registry"
