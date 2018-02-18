@@ -1,0 +1,5 @@
+check process gitlab
+  with pidfile /var/vcap/sys/run/ansible-gitlab/pid
+  start program "/var/vcap/jobs/ansible-gitlab/bin/ctl start"
+  stop program "/var/vcap/jobs/ansible-gitlab/bin/ctl stop"
+  group vcap

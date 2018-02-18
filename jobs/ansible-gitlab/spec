@@ -11,7 +11,16 @@ packages: []
 
 properties:
   gitlab:
-    version: "10.4.3-ce.0"
+    version:
+      default: "10.4.3-ce.0"
     external_url: "http://example.com"
-    backup_path: "/var/vcap/store/backup"
-    backup_keep_time: "86400"
+    backup_path:
+      default: "/var/vcap/store/backup"
+    backup_keep_time:
+      default: 86400
+    log_rail:
+      default: "/var/vcap/store/gitlab/var/log/gitlab/gitlab-rails"
+    log_unicorn:
+      default: "/var/vcap/store/gitlab/var/log/gitlab/unicorn"
+    log_registry:
+      default: "/var/vcap/store/gitlab/var/log/gitlab/registry"

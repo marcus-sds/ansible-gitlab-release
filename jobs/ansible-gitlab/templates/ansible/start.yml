@@ -1,4 +1,9 @@
 ---
+- name: Ansible check file gitlab-ctl
+  stat:
+    path: /usr/bin/gitlab-ctl
+  register: file_gitlab
+
 - name: Update all packages list to the latest version
   shell: apt-get update
 
@@ -13,23 +18,37 @@
 
 - name: Create gitlab directory
   shell: |
-    mkdir -p /var/vcap/store/opt/gitlab
-    mkdir -p /var/vcap/store/var/opt/gitlab
-    mkdir -p <%= p("gitlab.backup_path") %>
+    mkdir -p /var/vcap/store/gitlab/var/log/gitlab
+    mkdir -p /var/vcap/store/gitlab/opt/gitlab
+    mkdir -p /var/vcap/store/gitlab/var/opt/gitlab
+    mkdir -p <%= p('gitlab.backup_path') %>
 
 - name: Link gitlab directory
   shell: |
-    ln -s /var/vcap/store/opt/gitlab /opt/gitlab
-    ln -s /var/vcap/store/var/opt/gitlab /var/opt/gitlab
+    ln -s /var/vcap/store/gitlab/var/log/gitlab /var/log/gitlab
+    ln -s /var/vcap/store/gitlab/opt/gitlab /opt/gitlab
+    ln -s /var/vcap/store/gitlab/var/opt/gitlab /var/opt/gitlab
+  when: not file_gitlab.stat.exists
 
 - name: Install gitlab-ce
-  shell: apt-get install -y gitlab-ce=<%= p("gitlab.version") %>
+  shell: apt-get install -y gitlab-ce=<%= p('gitlab.version') %>
+  retries: 3
+  delay: 1
 
 - name: Link gitlab.rb
   shell: |
-    rm -f /etc/gitlab/gitlab.rb
+    mv /etc/gitlab/gitlab.rb /etc/gitlab/gitlab.rb.org
     ln -s /var/vcap/jobs/ansible-gitlab/ansible/gitlab.rb /etc/gitlab/gitlab.rb
    
+- name: permission gitlab directory
+  shell: |
+    chmod o+rx /var/log
+    chown -R git:git /var/opt/gitlab/.ssh
+
+#- name: Link gitlab secret
+#  shell: |
+#    rm -f /etc/gitlab/gitlab.rb
+
 - name: gitlab reconfigure
   shell: |
     gitlab-ctl reconfigure
