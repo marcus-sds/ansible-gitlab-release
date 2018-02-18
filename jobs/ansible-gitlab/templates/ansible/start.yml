@@ -32,8 +32,7 @@
 
 - name: Install gitlab-ce
   shell: apt-get install -y gitlab-ce=<%= p('gitlab.version') %>
-  retries: 3
-  delay: 1
+  ignore_errors: True
 
 - name: Link gitlab.rb
   shell: |
@@ -44,10 +43,6 @@
   shell: |
     chmod o+rx /var/log
     chown -R git:git /var/opt/gitlab/.ssh
-
-#- name: Link gitlab secret
-#  shell: |
-#    rm -f /etc/gitlab/gitlab.rb
 
 - name: gitlab reconfigure
   shell: |
