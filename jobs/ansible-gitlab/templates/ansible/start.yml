@@ -22,6 +22,7 @@
     mkdir -p /var/vcap/store/gitlab/opt/gitlab
     mkdir -p /var/vcap/store/gitlab/var/opt/gitlab
     mkdir -p <%= p('gitlab.backup_path') %>
+  ignore_errors: True
 
 - name: Link gitlab directory
   shell: |
@@ -38,6 +39,7 @@
   shell: |
     mv /etc/gitlab/gitlab.rb /etc/gitlab/gitlab.rb.org
     ln -s /var/vcap/jobs/ansible-gitlab/ansible/gitlab.rb /etc/gitlab/gitlab.rb
+  ignore_errors: True
    
 - name: permission gitlab directory
   shell: |
