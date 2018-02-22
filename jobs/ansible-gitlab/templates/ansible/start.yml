@@ -1,5 +1,5 @@
 ---
-- name: Ansible check file gitlab-ctl
+- name: Check file gitlab-ctl
   stat:
     path: /usr/bin/gitlab-ctl
   register: file_gitlab
@@ -18,7 +18,7 @@
 
 - name: Create gitlab directory
   shell: |
-    mkdir -p /var/vcap/store/gitlab/var/log/gitlab
+    mkdir -p /var/vcap/data/gitlab/var/log/gitlab
     mkdir -p /var/vcap/store/gitlab/opt/gitlab
     mkdir -p /var/vcap/store/gitlab/var/opt/gitlab
     mkdir -p <%= p('gitlab.backup_path') %>
@@ -26,7 +26,7 @@
 
 - name: Link gitlab directory
   shell: |
-    ln -s /var/vcap/store/gitlab/var/log/gitlab /var/log/gitlab
+    ln -s /var/vcap/data/gitlab/var/log/gitlab /var/log/gitlab
     ln -s /var/vcap/store/gitlab/opt/gitlab /opt/gitlab
     ln -s /var/vcap/store/gitlab/var/opt/gitlab /var/opt/gitlab
   when: not file_gitlab.stat.exists
@@ -39,6 +39,18 @@
   shell: |
     mv /etc/gitlab/gitlab.rb /etc/gitlab/gitlab.rb.org
     ln -s /var/vcap/jobs/ansible-gitlab/ansible/gitlab.rb /etc/gitlab/gitlab.rb
+  ignore_errors: True
+
+- name: Check file gitlab-secrets
+  stat:
+    path: /var/vcap/store/gitlab/gitlab-secrets.json
+  register: file_gitlab_secrets
+
+- name: Link secrets
+  shell: |
+    mv /etc/gitlab/gitlab-secrets.json /var/vcap/store/gitlab/
+    ln -s /var/vcap/store/gitlab/gitlab-secrets.json /etc/gitlab/gitlab-secrets.json
+  when: not file_gitlab_secrets.stat.exists
   ignore_errors: True
    
 - name: permission gitlab directory

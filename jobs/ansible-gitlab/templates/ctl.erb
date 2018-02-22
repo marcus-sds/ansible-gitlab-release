@@ -30,6 +30,7 @@ case $1 in
 
   stop)
     gitlab-ctl stop
+    initctl stop gitlab-runsvdir
     rm -f $PIDFILE
 
     ;;

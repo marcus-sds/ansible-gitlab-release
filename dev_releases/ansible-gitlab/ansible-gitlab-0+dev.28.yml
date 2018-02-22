@@ -1,0 +1,9 @@
+name: ansible-gitlab
+version: 0+dev.28
+commit_hash: 487f196
+uncommitted_changes: true
+jobs:
+- name: ansible-gitlab
+  version: 5e15cfd714edc768b43e8ebecbc98e67bc12a6b2
+  fingerprint: 5e15cfd714edc768b43e8ebecbc98e67bc12a6b2
+  sha1: 4d95e385833cd2f6b56df9818f2357f8215044d0
